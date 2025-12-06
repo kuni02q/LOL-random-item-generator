@@ -1,0 +1,11 @@
+<h5>Champions</h5>
+<div class="row g-2">
+  <div class="col-6 col-sm-4 col-lg-3" *ngFor="let champ of champions">
+    <div class="card">
+      <img [src]="'http://localhost:8081/' + champ.imageUrl" class="card-img-top" alt="{{champ.name}}">
+      <div class="card-body p-1 text-center">
+        <small>{{ champ.name }}</small>
+      </div>
+    </div>
+  </div>
+</div>

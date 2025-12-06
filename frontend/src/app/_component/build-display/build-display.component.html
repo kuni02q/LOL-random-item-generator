@@ -1,0 +1,10 @@
+<button class="btn btn-primary mb-3" (click)="generateBuild()">Generate Build</button>
+
+<div class="build-display w-100 d-flex flex-wrap justify-content-center">
+  <div *ngFor="let buildItem of buildItems" class="card m-1" style="width: 80px;">
+    <img [src]="buildItem.imageUrl" class="card-img-top" alt="{{buildItem.name}}">
+    <div class="card-body p-1 text-center">
+      <small>{{buildItem.name}}</small>
+    </div>
+  </div>
+</div>

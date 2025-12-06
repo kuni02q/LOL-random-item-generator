@@ -1,0 +1,11 @@
+<h5>Items</h5>
+<div class="row g-2">
+  <div class="col-3 col-sm-2 col-lg-2" *ngFor="let item of items">
+    <div class="card">
+      <img [src]="'http://localhost:8081/' + item.imageUrl" class="card-img-top" alt="{{item.name}}">
+      <div class="card-body p-1 text-center">
+        <small>{{item.name}}</small>
+      </div>
+    </div>
+  </div>
+</div>

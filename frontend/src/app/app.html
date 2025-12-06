@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid vh-100">
+  <div class="row h-100">
+
+    <!-- Bal oldal: Championok + Itemek -->
+    <div class="col-md-6 d-flex flex-column border-end">
+      <div class="flex-grow-1 p-2 border-bottom overflow-auto">
+        <app-champion-list></app-champion-list>
+      </div>
+      <div class="flex-grow-1 p-2 overflow-auto">
+        <app-item-list></app-item-list>
+      </div>
+    </div>
+
+    <!-- Jobb oldal: Build generálás -->
+    <div class="col-md-6 d-flex flex-column p-4">
+      <div class="d-flex justify-content-center mb-3">
+        <app-build-display></app-build-display>
+      </div>
+      <div class="flex-grow-1 overflow-auto mt-3">
+        <app-saved-builds></app-saved-builds>
+      </div>
+    </div>
+
+  </div>
+</div>
