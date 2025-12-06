@@ -9,9 +9,12 @@ import application.repository.ItemRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -32,7 +35,10 @@ public class BuildControllerImpl implements BuildController {
 
     @Override
     public Build getOne(@NonNull String id) {
-        return buildRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return buildRepository.findById(id).
+                orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Build not found with id: " + id
+        ));
     }
 
     @Override
@@ -57,19 +63,21 @@ public class BuildControllerImpl implements BuildController {
     public Build generateRandomBuild() {
         List<Champion> champions = championRepository.findAll();
         List<Item> legendaryItems = itemRepository.findAll().stream()
-                .filter(i -> i.getInto() == null || i.getInto().isEmpty())
                 .toList();
 
         if (champions.isEmpty()) {
-            throw new IllegalStateException("Nincsenek championok!");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No champions available");
         }
+        if (legendaryItems.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Not enough items to generate build");
+        }
+
 
         Champion champ = champions.get(new Random().nextInt(champions.size()));
 
-        int itemCount = 6;
-
-        Collections.shuffle(legendaryItems);
-        List<Item> selectedItems = legendaryItems.subList(0, itemCount);
+        List<Item> items = new ArrayList<>(legendaryItems);
+        Collections.shuffle(items);
+        List<Item> selectedItems = items.subList(0, 6);
 
         Build build = Build.builder()
                 .champion(champ)

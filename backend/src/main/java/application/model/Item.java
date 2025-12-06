@@ -22,6 +22,4 @@ public class Item {
     private String name;
     private String imageUrl;
     private int cost;
-    @ElementCollection
-    private List<String> into;
 }

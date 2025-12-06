@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuildService, Build } from '../../_service/build.service';
-import { Item } from '../../_service/item.service';
 
 @Component({
   selector: 'app-build-display',
@@ -11,14 +10,24 @@ import { Item } from '../../_service/item.service';
   styleUrls: ['./build-display.component.scss']
 })
 export class BuildDisplayComponent {
-  buildItems: Item[] = [];
+  build?: Build;
+  loading = false;
+  error?: string;
 
   constructor(private buildService: BuildService) {}
 
   generateBuild() {
-    this.buildService.generateRandomBuild().subscribe((build: Build) => {
-      console.log('Generated Build:', build);
-      this.buildItems = build.items;
+    this.loading = true;
+    this.error = undefined;
+    this.buildService.generateRandomBuild().subscribe({
+      next: (b) => {
+        this.build = b;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = err.message || 'Error generating build';
+        this.loading = false;
+      }
     });
   }
 }

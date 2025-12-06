@@ -78,21 +78,12 @@ public class ItemRunner implements CommandLineRunner {
                     continue;
                 }
 
-                JsonNode intoNode = item.get("into");
-                List<String> intoList = null;
-                if (intoNode != null && intoNode.isArray()) {
-                    intoList = new ArrayList<>();
-                    for (JsonNode n : intoNode) {
-                        intoList.add(n.asText());
-                    }
-                }
 
                 Item i = Item.builder()
                         .id(itemId)
                         .name(item.get("name").asText())
                         .imageUrl("items/" + itemId + ".png")
                         .cost(item.get("gold").get("total").asInt())
-                        .into(intoList)
                         .build();
                 repository.save(i);
 
