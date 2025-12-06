@@ -1,9 +1,9 @@
 <h5 class="text-center sticky-top bg-white py-1 mb-2">Items</h5>
 
 <div class="d-flex flex-column h-100">
-  <div class="d-flex flex-wrap overflow-auto" style="max-height: 50%;">
+  <div class="d-flex flex-wrap overflow-auto" style="height: calc(100% - 40px);">
     <div class="p-1" *ngFor="let item of items" style="flex: 0 0 auto; width: 100px;">
-      <div class="card h-50 text-center">
+      <div class="card h-100 v-100 text-center">
         <img [src]="'http://localhost:8081/' + item.imageUrl"
              class="card-img-top img-fluid"
              alt="{{item.name}}"

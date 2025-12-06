@@ -1,9 +1,9 @@
 <h5 class="text-center sticky-top bg-white py-1 mb-2">Champions</h5>
 
 <div class="d-flex flex-column h-100">
-  <div class="d-flex flex-wrap overflow-auto" style="max-height: 50%;">
+  <div class="d-flex flex-wrap overflow-auto" style="height: calc(100% - 40px);">
     <div class="p-1" *ngFor="let champ of champions" style="flex: 0 0 auto; width: 100px;">
-      <div class="card h-50 text-center">
+      <div class="card v-100 h-100 text-center">
         <img [src]="'http://localhost:8081/' + champ.imageUrl"
              class="card-img-top img-fluid"
              alt="{{champ.name}}"
