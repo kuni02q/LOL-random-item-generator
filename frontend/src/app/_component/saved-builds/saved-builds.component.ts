@@ -12,9 +12,7 @@ export class SavedBuildsComponent {
   savedBuilds: { items: { imageUrl: string; name: string }[] }[] = [
     // Példa adatok
     { items: [
-        { imageUrl: 'https://via.placeholder.com/50', name: 'Item1' },
-        { imageUrl: 'https://via.placeholder.com/50', name: 'Item2' },
-        { imageUrl: 'https://via.placeholder.com/50', name: 'Item3' }
+
       ]
     }
   ];

@@ -11,13 +11,16 @@ import { ChampionService, Champion } from '../../_service/champion.service';
 })
 export class ChampionListComponent implements OnInit {
   champions: Champion[] = [];
+  loading = true;
 
   constructor(private championService: ChampionService) {}
 
   ngOnInit() {
+    console.log('ChampionList ngOnInit');
     this.championService.getAll().subscribe((champions: Champion[]) => {
       console.log('Champions:', champions);
       this.champions = champions;
+
     });
   }
 }
