@@ -11,7 +11,7 @@
 <div class="d-flex flex-column h-100">
   <div class="d-flex flex-wrap overflow-auto" style="height: calc(100% - 40px);">
     <div class="p-1" *ngFor="let item of filteredItems()" style="flex: 0 0 auto; width: 100px;">
-      <div class="card text-center">
+      <div class="card text-center" [appTooltip]="item.name">
         <img [src]="'http://localhost:8081/' + item.imageUrl"
              class="card-img-top img-fluid"
              alt="{{item.name}}"

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChampionService, Champion } from '../../_service/champion.service';
+import {TooltipDirective} from '../../_directive/tooltip/tooltip.directive';
 
 @Component({
   selector: 'app-champion-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TooltipDirective],
   templateUrl: './champion-list.component.html',
   styleUrls: ['./champion-list.component.scss']
 })

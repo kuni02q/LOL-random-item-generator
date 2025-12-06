@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemService, Item } from '../../_service/item.service';
 import {FormsModule} from '@angular/forms';
+import {TooltipDirective} from '../../_directive/tooltip/tooltip.directive';
 
 @Component({
   selector: 'app-item-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TooltipDirective],
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.scss']
 })
