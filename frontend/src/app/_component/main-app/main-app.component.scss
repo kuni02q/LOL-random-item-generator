@@ -1,0 +1,38 @@
+/* Champions és Items kártyák egységes mérete */
+app-champion-list .card,
+app-item-list .card {
+  width: 100%;
+  max-width: 100px;
+  margin: auto;
+}
+
+app-champion-list .card img,
+app-item-list .card img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+}
+
+/* Sticky headers */
+.champions-container h5,
+.items-container h5,
+.saved-builds-container h5 {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #fff;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Scroll csak a komponenseken belül */
+.champions-container,
+.items-container {
+  max-height: 50%;
+  overflow-y: auto;
+}
+
+.saved-builds-container {
+  flex-grow: 1;
+  overflow-y: auto;
+}

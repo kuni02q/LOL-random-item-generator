@@ -1,10 +1,16 @@
-<h5>Items</h5>
-<div class="row g-2">
-  <div class="col-3 col-sm-2 col-lg-2" *ngFor="let item of items">
-    <div class="card">
-      <img [src]="'http://localhost:8081/' + item.imageUrl" class="card-img-top" alt="{{item.name}}">
-      <div class="card-body p-1 text-center">
-        <small>{{item.name}}</small>
+<h5 class="text-center sticky-top bg-white py-1 mb-2">Items</h5>
+
+<div class="d-flex flex-column h-100">
+  <div class="d-flex flex-wrap overflow-auto" style="max-height: 50%;">
+    <div class="p-1" *ngFor="let item of items" style="flex: 0 0 auto; width: 100px;">
+      <div class="card h-50 text-center">
+        <img [src]="'http://localhost:8081/' + item.imageUrl"
+             class="card-img-top img-fluid"
+             alt="{{item.name}}"
+             style="height: 50px; object-fit: contain;">
+        <div class="card-body p-1">
+          <small class="d-block text-truncate">{{ item.name }}</small>
+        </div>
       </div>
     </div>
   </div>

@@ -1,10 +1,16 @@
-<h5>Champions</h5>
-<div class="row g-2">
-  <div class="col-6 col-sm-4 col-lg-3" *ngFor="let champ of champions">
-    <div class="card">
-      <img [src]="'http://localhost:8081/' + champ.imageUrl" class="card-img-top" alt="{{champ.name}}">
-      <div class="card-body p-1 text-center">
-        <small>{{ champ.name }}</small>
+<h5 class="text-center sticky-top bg-white py-1 mb-2">Champions</h5>
+
+<div class="d-flex flex-column h-100">
+  <div class="d-flex flex-wrap overflow-auto" style="max-height: 50%;">
+    <div class="p-1" *ngFor="let champ of champions" style="flex: 0 0 auto; width: 100px;">
+      <div class="card h-50 text-center">
+        <img [src]="'http://localhost:8081/' + champ.imageUrl"
+             class="card-img-top img-fluid"
+             alt="{{champ.name}}"
+             style="height: 50px; object-fit: contain;">
+        <div class="card-body p-1">
+          <small class="d-block text-truncate">{{ champ.name }}</small>
+        </div>
       </div>
     </div>
   </div>

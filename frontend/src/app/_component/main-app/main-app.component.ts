@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ChampionListComponent } from '../champion-list/champion-list.component';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { BuildDisplayComponent } from '../build-display/build-display.component';
@@ -16,14 +16,8 @@ import { SavedBuildsComponent } from '../saved-builds/saved-builds.component';
   ],
   styleUrls: ['./main-app.component.scss']
 })
-export class MainAppComponent implements AfterViewInit {
-  ngAfterViewInit() {
-    setTimeout(() => {
-      const imgs = document.querySelectorAll('img');
-      imgs.forEach(img => {
-        const src = img.getAttribute('src');
-        img.setAttribute('src', src!); // újratölti a képet
-      });
-    }, 50);
+export class MainAppComponent implements OnInit {
+  ngOnInit() {
+    console.log('MainAppComponent ngOnInit');
   }
 }

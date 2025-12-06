@@ -1,24 +1,31 @@
 <div class="container-fluid vh-100">
   <div class="row h-100">
 
-    <!-- Bal oldal: Championok + Itemek -->
+    <!-- Bal oldal: Champions + Items -->
     <div class="col-md-6 d-flex flex-column border-end">
-      <div class="flex-grow-1 p-2 border-bottom overflow-auto">
+
+      <!-- Champions -->
         <app-champion-list></app-champion-list>
-      </div>
-      <div class="flex-grow-1 p-2 overflow-auto">
+
+      <!-- Items -->
         <app-item-list></app-item-list>
-      </div>
+
     </div>
 
-    <!-- Jobb oldal: Build generálás -->
+    <!-- Jobb oldal: Build Display + Saved Builds -->
     <div class="col-md-6 d-flex flex-column p-4">
-      <div class="d-flex justify-content-center mb-3">
-        <!--<app-build-display></app-build-display>-->
+
+      <!-- Build Display -->
+      <div class="d-flex justify-content-center mb-3 flex-shrink-0">
+        <app-build-display></app-build-display>
       </div>
+
+      <!-- Saved Builds -->
       <div class="flex-grow-1 overflow-auto mt-3">
-        <!--<app-saved-builds></app-saved-builds>-->
+        <h5 class="text-center sticky-top bg-white py-1 mb-2">Saved Builds</h5>
+        <app-saved-builds></app-saved-builds>
       </div>
+
     </div>
 
   </div>
