@@ -1,0 +1,9 @@
+.saved-builds-container {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.build-item-img {
+  height: 50px;
+  object-fit: contain;
+}
