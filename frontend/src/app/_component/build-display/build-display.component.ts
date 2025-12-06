@@ -2,6 +2,7 @@ import { Component, ChangeDetectorRef  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuildService, Build } from '../../_service/build.service';
 import {TooltipDirective} from '../../_directive/tooltip/tooltip.directive';
+import {FavoriteService, BuildFavorite} from '../../_service/favorite.service';
 
 @Component({
   selector: 'app-build-display',
@@ -14,14 +15,14 @@ export class BuildDisplayComponent {
   build?: Build;
   loading = false;
   error?: string;
-  buildFavorite = false;
+  buildFavoriteId: string | null = null;
 
-  constructor(private buildService: BuildService, private cd: ChangeDetectorRef) {}
+  constructor(private buildService: BuildService, private favoriteService:FavoriteService, private cd: ChangeDetectorRef) {}
 
   generateBuild() {
     this.loading = true;
     this.error = undefined;
-    this.buildFavorite = false;
+    this.buildFavoriteId = null;
 
     this.buildService.generateRandomBuild().subscribe({
       next: (b) => {
@@ -36,8 +37,23 @@ export class BuildDisplayComponent {
     });
   }
 
-  toggleBuildFavorite() {
-    this.buildFavorite = !this.buildFavorite;
+  toggleFavorite() {
+    if (!this.build) return;
+
+    // 1) Ha még nem kedvenc → hozzáadjuk
+    if (!this.buildFavoriteId) {
+      this.favoriteService.add(this.build.id).subscribe(fav => {
+        this.buildFavoriteId = fav.id;
+        this.cd.detectChanges();
+      });
+      return;
+    }
+
+    this.favoriteService.remove(this.buildFavoriteId).subscribe(() => {
+      this.buildFavoriteId = null;
+      this.cd.detectChanges();
+    });
+
   }
 
 }

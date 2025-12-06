@@ -38,8 +38,8 @@
 
     <div class="p-1" style="flex: 0 0 auto;">
       <i class="bi"
-         [ngClass]="buildFavorite ? 'bi-heart-fill text-danger' : 'bi-heart text-danger'"
-         (click)="toggleBuildFavorite()"
+         [ngClass]="buildFavoriteId ? 'bi-heart-fill text-danger' : 'bi-heart text-danger'"
+         (click)="toggleFavorite()"
          style="cursor: pointer; font-size: 3rem;"></i>
     </div>
 
