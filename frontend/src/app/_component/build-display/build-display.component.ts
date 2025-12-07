@@ -19,7 +19,7 @@ export class BuildDisplayComponent {
   error?: string;
   buildFavoriteId: string | null = null;
 
-  constructor(private buildService: BuildService, private favoriteService:FavoriteService, private cd: ChangeDetectorRef) {
+  constructor(private buildService: BuildService, private favoriteService: FavoriteService, private cd: ChangeDetectorRef) {
     this.favoriteService.favorites$.subscribe(favs => {
       if (this.build) {
         const isFavorite = favs.some(f => f.build.id === this.build!.id);
@@ -56,7 +56,6 @@ export class BuildDisplayComponent {
   toggleFavorite() {
     if (!this.build) return;
 
-    // 1) Ha még nem kedvenc → hozzáadjuk
     if (!this.buildFavoriteId) {
       this.favoriteService.add(this.build.id).subscribe(fav => {
         this.buildFavoriteId = fav.id;
@@ -92,9 +91,15 @@ export class BuildDisplayComponent {
 
     const parsed = JSON.parse(data);
     if (parsed.type === 'champion' && this.build) {
-      this.build.champion = parsed.data as Champion;
+      this.build.champion = {...parsed.data} as Champion;
       this.cd.detectChanges();
+
+      this.buildService.update(this.build).subscribe({
+        next: () => console.log('Build updated with new champion'),
+        error: err => console.error('Failed to update build:', err)
+      });
     }
+
   }
 
   onDropItem(event: DragEvent, targetItem: Item) {
@@ -106,11 +111,16 @@ export class BuildDisplayComponent {
     if (parsed.type === 'item' && this.build) {
       const index = this.build.items.findIndex(i => i.id === targetItem.id);
       if (index > -1) {
-        this.build.items[index] = parsed.data as Item;
+        this.build.items[index] = {...parsed.data} as Item;
         this.cd.detectChanges();
+
+
+        this.buildService.update(this.build).subscribe({
+          next: () => console.log('Build updated with new item'),
+          error: err => console.error('Failed to update build:', err)
+        });
       }
+
     }
   }
-
-
 }
