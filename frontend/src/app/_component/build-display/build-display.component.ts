@@ -63,7 +63,18 @@ export class BuildDisplayComponent {
       this.buildFavoriteId = null;
       this.cd.detectChanges();
     });
-
   }
+
+  loadBuild(build: Build) {
+    this.build = build;
+    this.buildFavoriteId = null;
+    this.favoriteService.favorites$.subscribe(favs => {
+      const fav = favs.find(f => f.build.id === build.id);
+      this.buildFavoriteId = fav?.id || null;
+      this.cd.detectChanges();
+    });
+  }
+
+
 
 }

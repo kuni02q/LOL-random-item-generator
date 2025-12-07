@@ -21,12 +21,12 @@
 
       <!-- Build Display -->
       <div style="height: 45%;">
-        <app-build-display></app-build-display>
+        <app-build-display #buildDisplay></app-build-display>
       </div>
 
       <!-- Saved Builds -->
       <div style="height: 45%;">
-        <app-saved-builds></app-saved-builds>
+        <app-saved-builds (editBuildEvent)="buildDisplay.loadBuild($event.build)"></app-saved-builds>
       </div>
 
     </div>

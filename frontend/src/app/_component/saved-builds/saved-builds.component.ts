@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {BuildFavorite, FavoriteService} from '../../_service/favorite.service';
 import {Observable} from 'rxjs';
@@ -15,6 +15,8 @@ export class SavedBuildsComponent implements OnInit {
   savedBuilds$!: Observable<BuildFavorite[]>;
   loading = false;
   error?: string;
+
+  @Output() editBuildEvent = new EventEmitter<BuildFavorite>();
 
   constructor(private favoriteService: FavoriteService) {}
 
@@ -35,8 +37,7 @@ export class SavedBuildsComponent implements OnInit {
   hoveredDeleteId: string | null = null;
 
   editBuild(fav: BuildFavorite) {
-    console.log("Edit build:", fav);
-    // ide majd jöhet a módosítás logika
+    this.editBuildEvent.emit(fav);
   }
 
   deleteBuild(fav: BuildFavorite) {
