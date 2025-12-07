@@ -17,7 +17,17 @@ export class BuildDisplayComponent {
   error?: string;
   buildFavoriteId: string | null = null;
 
-  constructor(private buildService: BuildService, private favoriteService:FavoriteService, private cd: ChangeDetectorRef) {}
+  constructor(private buildService: BuildService, private favoriteService:FavoriteService, private cd: ChangeDetectorRef) {
+    this.favoriteService.favorites$.subscribe(favs => {
+      if (this.build) {
+        const isFavorite = favs.some(f => f.build.id === this.build!.id);
+        if (!isFavorite && this.buildFavoriteId) {
+          this.buildFavoriteId = null;
+          this.cd.detectChanges();
+        }
+      }
+    });
+  }
 
   generateBuild() {
     this.loading = true;
