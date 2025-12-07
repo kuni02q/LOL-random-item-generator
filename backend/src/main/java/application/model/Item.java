@@ -22,4 +22,5 @@ public class Item {
     private String name;
     private String imageUrl;
     private int cost;
+    private int intoCount;
 }

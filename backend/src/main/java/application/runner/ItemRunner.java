@@ -46,7 +46,6 @@ public class ItemRunner implements CommandLineRunner {
             JsonNode root = mapper.readTree(inputStream);
             JsonNode data = root.get("data");
 
-            //File imageDir = new File("src/main/resources/static/items/");
             File imageDir = new File("images/items/");
             if (!imageDir.exists()) {
                 imageDir.mkdir();
@@ -78,12 +77,19 @@ public class ItemRunner implements CommandLineRunner {
                     continue;
                 }
 
+                JsonNode intoNode = item.get("into");
+                int intoCount = 0;
+                if (intoNode != null && intoNode.isArray()) {
+                    intoCount = intoNode.size();
+                }
+
 
                 Item i = Item.builder()
                         .id(itemId)
                         .name(item.get("name").asText())
                         .imageUrl("items/" + itemId + ".png")
                         .cost(item.get("gold").get("total").asInt())
+                        .intoCount(intoCount)
                         .build();
                 repository.save(i);
 

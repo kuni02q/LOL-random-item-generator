@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {BuildFavorite, FavoriteService} from '../../_service/favorite.service';
 import {Observable} from 'rxjs';
+import {TooltipDirective} from '../../_directive/tooltip/tooltip.directive';
 
 @Component({
   selector: 'app-saved-builds',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TooltipDirective],
   templateUrl: './saved-builds.component.html',
   styleUrls: ['./saved-builds.component.scss']
 })

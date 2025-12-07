@@ -63,6 +63,7 @@ public class BuildControllerImpl implements BuildController {
     public Build generateRandomBuild() {
         List<Champion> champions = championRepository.findAll();
         List<Item> legendaryItems = itemRepository.findAll().stream()
+                .filter(item -> item.getIntoCount() == 0)
                 .toList();
 
         if (champions.isEmpty()) {

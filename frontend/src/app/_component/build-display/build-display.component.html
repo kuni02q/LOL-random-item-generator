@@ -2,9 +2,12 @@
   {{ loading ? 'Generating...' : 'Generate Build' }}
 </button>
 
-<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+@if (error) {
+  <div class="alert alert-danger">{{ error }}</div>
+}
 
-<div *ngIf="build?.champion" class="mb-2">
+@if (build?.champion) {
+<div class="mb-2">
   <h5 class="text-center mb-1">Champion</h5>
   <div class="d-flex justify-content-center">
     <div class="card text-center" style="width: 100px;" [appTooltip]="build?.champion?.name ?? ''">
@@ -18,23 +21,26 @@
     </div>
   </div>
 </div>
+}
 
-<div *ngIf="build?.items?.length">
+@if (build?.items?.length) {
   <h5 class="text-center mb-1">Items</h5>
 
   <div class="d-flex flex-wrap justify-content-center">
 
-    <div *ngFor="let item of build?.items" class="p-1" style="flex: 0 0 auto; width: 100px;">
-      <div class="card text-center" [appTooltip]="item.name">
-        <img [src]="'http://localhost:8081/' + item.imageUrl"
-             class="card-img-top img-fluid"
-             alt="{{item.name}}"
-             style="height: 50px; object-fit: contain;">
-        <div class="card-body p-1">
-          <small class="d-block text-truncate">{{ item.name }}</small>
+    @for (item of build?.items; track item.id) {
+      <div class="p-1" style="flex: 0 0 auto; width: 100px;">
+        <div class="card text-center" [appTooltip]="item.name">
+          <img [src]="'http://localhost:8081/' + item.imageUrl"
+               class="card-img-top img-fluid"
+               alt="{{item.name}}"
+               style="height: 50px; object-fit: contain;">
+          <div class="card-body p-1">
+            <small class="d-block text-truncate">{{ item.name }}</small>
+          </div>
         </div>
       </div>
-    </div>
+    }
 
     <div class="p-1" style="flex: 0 0 auto;">
       <i class="bi"
@@ -44,5 +50,5 @@
     </div>
 
   </div>
-</div>
+}
 
