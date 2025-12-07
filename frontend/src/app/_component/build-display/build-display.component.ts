@@ -29,6 +29,10 @@ export class BuildDisplayComponent {
     });
   }
 
+  ngOnInit() {
+    this.generateBuild();
+  }
+
   generateBuild() {
     this.loading = true;
     this.error = undefined;
