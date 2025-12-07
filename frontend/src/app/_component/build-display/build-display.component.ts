@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BuildService, Build } from '../../_service/build.service';
 import {TooltipDirective} from '../../_directive/tooltip/tooltip.directive';
 import {FavoriteService, BuildFavorite} from '../../_service/favorite.service';
+import {Champion} from '../../_service/champion.service';
+import {Item} from '../../_service/item.service';
 
 @Component({
   selector: 'app-build-display',
@@ -79,6 +81,36 @@ export class BuildDisplayComponent {
     });
   }
 
+  allowDrop(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onDropChampion(event: DragEvent) {
+    event.preventDefault();
+    const data = event.dataTransfer?.getData('application/json');
+    if (!data) return;
+
+    const parsed = JSON.parse(data);
+    if (parsed.type === 'champion' && this.build) {
+      this.build.champion = parsed.data as Champion;
+      this.cd.detectChanges();
+    }
+  }
+
+  onDropItem(event: DragEvent, targetItem: Item) {
+    event.preventDefault();
+    const data = event.dataTransfer?.getData('application/json');
+    if (!data) return;
+
+    const parsed = JSON.parse(data);
+    if (parsed.type === 'item' && this.build) {
+      const index = this.build.items.findIndex(i => i.id === targetItem.id);
+      if (index > -1) {
+        this.build.items[index] = parsed.data as Item;
+        this.cd.detectChanges();
+      }
+    }
+  }
 
 
 }

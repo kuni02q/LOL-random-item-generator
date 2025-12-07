@@ -29,4 +29,9 @@ export class ItemListComponent implements OnInit {
       it.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
+
+  onDragStartItem(event: DragEvent, item: Item) {
+    event.dataTransfer?.setData('application/json', JSON.stringify({ type: 'item', data: item }));
+  }
+
 }

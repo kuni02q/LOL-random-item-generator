@@ -32,4 +32,8 @@ export class ChampionListComponent implements OnInit {
     );
   }
 
+  onDragStartChampion(event: DragEvent, champion: Champion) {
+    event.dataTransfer?.setData('application/json', JSON.stringify({ type: 'champion', data: champion }));
+  }
+
 }

@@ -9,7 +9,9 @@
 @if (build?.champion) {
 <div class="mb-2">
   <h5 class="text-center mb-1">Champion</h5>
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center"
+       (dragover)="allowDrop($event)"
+       (drop)="onDropChampion($event)">
     <div class="card text-center" style="width: 100px;" [appTooltip]="build?.champion?.name ?? ''">
       <img [src]="'http://localhost:8081/' + build?.champion?.imageUrl"
            class="card-img-top img-fluid"
@@ -29,7 +31,9 @@
   <div class="d-flex flex-wrap justify-content-center">
 
     @for (item of build?.items; track item.id) {
-      <div class="p-1" style="flex: 0 0 auto; width: 100px;">
+      <div class="p-1" style="flex: 0 0 auto; width: 100px;"
+           (dragover)="allowDrop($event)"
+           (drop)="onDropItem($event, item)">
         <div class="card text-center" [appTooltip]="item.name">
           <img [src]="'http://localhost:8081/' + item.imageUrl"
                class="card-img-top img-fluid"
