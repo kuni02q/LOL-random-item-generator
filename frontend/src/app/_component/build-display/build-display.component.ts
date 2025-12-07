@@ -59,6 +59,9 @@ export class BuildDisplayComponent {
     if (!this.buildFavoriteId) {
       this.favoriteService.add(this.build.id).subscribe(fav => {
         this.buildFavoriteId = fav.id;
+
+        this.loadBuild(fav.build);
+
         this.cd.detectChanges();
       });
       return;

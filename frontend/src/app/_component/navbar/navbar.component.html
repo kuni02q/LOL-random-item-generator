@@ -1,5 +1,10 @@
 <nav class="navbar bg-dark navbar-expand-lg sticky-top" data-bs-theme="dark">
   <div class="container">
     <a class="navbar-brand" routerLink="">LOL Item Generator</a>
+
+    <button class="btn btn-link text-decoration-none text-white" (click)="toggleTheme()" style="font-size: 2rem">
+      <i [ngClass]="isDark ? 'bi-emoji-sunglasses-fill' : 'bi-emoji-sunglasses'"></i>
+    </button>
+
   </div>
 </nav>
