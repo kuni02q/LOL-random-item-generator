@@ -19,6 +19,8 @@ public class Build {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "champion_id")
     private Champion champion;

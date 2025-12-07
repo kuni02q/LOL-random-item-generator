@@ -5,11 +5,12 @@ import {TooltipDirective} from '../../_directive/tooltip/tooltip.directive';
 import {FavoriteService, BuildFavorite} from '../../_service/favorite.service';
 import {Champion} from '../../_service/champion.service';
 import {Item} from '../../_service/item.service';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-build-display',
   standalone: true,
-  imports: [CommonModule, TooltipDirective],
+  imports: [CommonModule, TooltipDirective, FormsModule],
   templateUrl: './build-display.component.html',
   styleUrls: ['./build-display.component.scss']
 })
@@ -126,4 +127,14 @@ export class BuildDisplayComponent {
 
     }
   }
+
+  updateBuildName() {
+    if (!this.build) return;
+
+    this.buildService.update(this.build).subscribe({
+      next: () => console.log("Build name updated"),
+      error: err => console.error("Error updating name:", err)
+    });
+  }
+
 }

@@ -6,6 +6,7 @@ import { Item } from './item.service';
 
 export interface Build {
   id: string;
+  name: string;
   champion: Champion;
   items: Item[];
   created: string;

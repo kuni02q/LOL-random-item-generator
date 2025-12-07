@@ -6,6 +6,7 @@ import application.model.Item;
 import application.repository.BuildRepository;
 import application.repository.ChampionRepository;
 import application.repository.ItemRepository;
+import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +62,10 @@ public class BuildControllerImpl implements BuildController {
 
     @Override
     public Build generateRandomBuild() {
+        Faker faker = new Faker();
+        String generatedName = faker.space().galaxy() + " " + faker.animal().name();
+
+
         List<Champion> champions = championRepository.findAll();
         List<Item> legendaryItems = itemRepository.findAll().stream()
                 .filter(item -> item.getIntoCount() == 0)
@@ -81,6 +86,7 @@ public class BuildControllerImpl implements BuildController {
         List<Item> selectedItems = items.subList(0, 6);
 
         Build build = Build.builder()
+                .name(generatedName)
                 .champion(champ)
                 .items(selectedItems)
                 .created(OffsetDateTime.now())

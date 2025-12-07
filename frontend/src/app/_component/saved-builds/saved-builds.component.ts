@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import {BuildFavorite, FavoriteService} from '../../_service/favorite.service';
 import {Observable} from 'rxjs';
 import {TooltipDirective} from '../../_directive/tooltip/tooltip.directive';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-saved-builds',
   standalone: true,
-  imports: [CommonModule, TooltipDirective],
+  imports: [CommonModule, TooltipDirective, FormsModule],
   templateUrl: './saved-builds.component.html',
   styleUrls: ['./saved-builds.component.scss']
 })
@@ -15,6 +16,7 @@ export class SavedBuildsComponent implements OnInit {
   savedBuilds$!: Observable<BuildFavorite[]>;
   loading = false;
   error?: string;
+  searchText = '';
 
   @Output() editBuildEvent = new EventEmitter<BuildFavorite>();
 
@@ -55,6 +57,15 @@ export class SavedBuildsComponent implements OnInit {
         alert('Failed to delete favorite build.');
       }
     });
+  }
+
+  filteredBuilds(favs: BuildFavorite[] | null) {
+    favs = favs ?? [];
+    if (!this.searchText.trim()) return favs;
+
+    return favs.filter(f =>
+      (f.build.name ?? '').toLowerCase().includes(this.searchText.toLowerCase())
+    );
   }
 
 
