@@ -28,6 +28,27 @@
           </div>
         }
 
+        <!-- IKONOK -->
+        <div class="ms-auto d-flex align-items-center gap-2">
+
+          <i class="bi"
+             [ngClass]="hoveredEditId ===fav.id ? 'bi-pencil-fill' : 'bi-pencil'"
+             (mouseenter)="hoveredEditId = fav.id"
+             (mouseleave)="hoveredEditId = null"
+             (click)="editBuild(fav)"
+             style="cursor: pointer; font-size: 3rem;">
+          </i>
+
+          <i class="bi text-danger"
+             [ngClass]="hoveredDeleteId === fav.id ? 'bi-trash-fill' : 'bi-trash'"
+             (mouseenter)="hoveredDeleteId = fav.id"
+             (mouseleave)="hoveredDeleteId = null"
+             (click)="deleteBuild(fav)"
+             style="cursor: pointer; font-size: 3rem;">
+          </i>
+
+        </div>
+
       </div>
     </div>
   }

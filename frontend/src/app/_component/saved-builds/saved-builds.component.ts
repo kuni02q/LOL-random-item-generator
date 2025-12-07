@@ -30,4 +30,31 @@ export class SavedBuildsComponent implements OnInit {
       }
     });
   }
+
+  hoveredEditId: string | null = null;
+  hoveredDeleteId: string | null = null;
+
+  editBuild(fav: BuildFavorite) {
+    console.log("Edit build:", fav);
+    // ide majd jöhet a módosítás logika
+  }
+
+  deleteBuild(fav: BuildFavorite) {
+    if (!confirm('Are you sure you want to delete this favorite build?')) {
+      return;
+    }
+
+    this.favoriteService.remove(fav.id).subscribe({
+      next: () => {
+        console.log('Favorite build deleted:', fav.id);
+        // A BehaviorSubject automatikusan frissíti a savedBuilds$ Observable-t
+      },
+      error: (err) => {
+        console.error('Error deleting favorite build:', err);
+        alert('Failed to delete favorite build.');
+      }
+    });
+  }
+
+
 }
