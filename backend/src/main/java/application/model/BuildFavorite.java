@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -21,4 +23,7 @@ public class BuildFavorite {
     private Build build;
 
     private OffsetDateTime created;
+
+    @ManyToMany(mappedBy = "favoriteBuilds")
+    private Set<User> users = new HashSet<>();
 }
