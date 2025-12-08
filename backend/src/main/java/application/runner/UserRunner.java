@@ -23,7 +23,7 @@ public class UserRunner implements CommandLineRunner {
             User admin = User.builder()
                     .username("admin")
                     .email("admin@example.com")
-                    .password(passwordEncoder.encode("admin123")) // jelszó: admin123
+                    .password(passwordEncoder.encode("admin123"))
                     .build();
             userRepository.save(admin);
             System.out.println("Admin user created: username=admin, password=admin123");
