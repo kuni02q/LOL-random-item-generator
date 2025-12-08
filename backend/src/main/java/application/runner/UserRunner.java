@@ -19,6 +19,18 @@ public class UserRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Faker faker = new Faker();
 
+        if (userRepository.findByUsername("admin").isEmpty()) {
+            User admin = User.builder()
+                    .username("admin")
+                    .email("admin@example.com")
+                    .password(passwordEncoder.encode("admin123")) // jelszó: admin123
+                    .build();
+            userRepository.save(admin);
+            System.out.println("Admin user created: username=admin, password=admin123");
+        }
+
+
+
         for (int i = 0; i < 100; i++) {
             User user = User.builder()
                     .username(faker.name().username())

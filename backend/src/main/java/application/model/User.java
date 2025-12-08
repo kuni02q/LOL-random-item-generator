@@ -23,7 +23,7 @@ public class User {
     private String email;
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "USER_FAVORITE_BUILDS",
             joinColumns = @JoinColumn(name = "user_id"),

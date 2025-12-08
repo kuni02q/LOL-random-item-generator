@@ -15,10 +15,10 @@
     <div class="card text-center" style="width: 100px;" [appTooltip]="build?.champion?.name ?? ''">
       <img [src]="'http://localhost:8081/' + build?.champion?.imageUrl"
            class="card-img-top img-fluid"
-           alt="{{build?.champion?.name}}"
+           alt="{{build?.champion?.name ?? ''}}"
            style="height: 60px; object-fit: contain;">
       <div class="card-body p-1">
-        <small class="d-block text-truncate">{{ build?.champion?.name }}</small>
+        <small class="d-block text-truncate">{{ build?.champion?.name ?? '' }}</small>
       </div>
     </div>
   </div>
@@ -34,13 +34,13 @@
       <div class="p-1" style="flex: 0 0 auto; width: 100px;"
            (dragover)="allowDrop($event)"
            (drop)="onDropItem($event, item)">
-        <div class="card text-center" [appTooltip]="item.name">
+        <div class="card text-center" [appTooltip]="item?.name ?? ''">
           <img [src]="'http://localhost:8081/' + item.imageUrl"
                class="card-img-top img-fluid"
-               alt="{{item.name}}"
+               alt="{{item?.name ?? ''}}"
                style="height: 50px; object-fit: contain;">
           <div class="card-body p-1">
-            <small class="d-block text-truncate">{{ item.name }}</small>
+            <small class="d-block text-truncate">{{ item?.name ?? ''}}</small>
           </div>
         </div>
       </div>
@@ -57,10 +57,13 @@
 }
 
 <div class="mt-3 text-center">
-  <input type="text"
-         class="form-control form-control-sm w-50 mx-auto text-center fw-bold"
-         placeholder="Build name..."
-         [(ngModel)]="build!.name"
-         (blur)="updateBuildName()">
+  @if (build) {
+    <input
+      type="text"
+      class="form-control form-control-sm w-50 mx-auto text-center fw-bold"
+      placeholder="Build name..."
+      [(ngModel)]="build.name"
+      (blur)="updateBuildName()">
+  }
 </div>
 
