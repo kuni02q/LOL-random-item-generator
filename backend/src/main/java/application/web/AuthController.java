@@ -32,6 +32,32 @@ public class AuthController {
         return Map.of("token", token);
     }
 
+    @PostMapping("/register")
+    public Map<String, String> register(@RequestBody RegisterRequest request) {
+        // Ellenőrizzük, hogy a felhasználónév vagy email már létezik-e
+        if (userRepository.existsByUsername(request.username())) {
+            throw new RuntimeException("Username already exists");
+        }
+        if (userRepository.existsByEmail(request.email())) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        // Új felhasználó létrehozása és jelszó kódolása
+        User user = new User();
+        user.setUsername(request.username());
+        user.setEmail(request.email());
+        user.setPassword(passwordEncoder.encode(request.password()));
+
+        userRepository.save(user);
+
+        // JWT generálása
+        String token = jwtUtil.generateToken(user.getUsername());
+
+        return Map.of("token", token);
+    }
+
     public static record AuthRequest(String username, String password) {}
+
+    public static record RegisterRequest(String username, String email, String password) {}
 
 }

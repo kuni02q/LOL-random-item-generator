@@ -1,29 +1,78 @@
 <div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="card p-4 shadow-lg" style="width: 350px;">
-    <h3 class="text-center mb-3">Bejelentkezés</h3>
+  <div class="card p-4 shadow-lg" style="width: 400px;">
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-3">
+      <li class="nav-item">
+        <button class="nav-link"
+                [class.active]="mode === 'login'"
+                (click)="mode = 'login'">
+          Bejelentkezés
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link"
+                [class.active]="mode === 'register'"
+                (click)="mode = 'register'">
+          Regisztráció
+        </button>
+      </li>
+    </ul>
 
-      <div class="mb-3">
-        <label for="username" class="form-label">Felhasználónév</label>
-        <input id="username" formControlName="username" type="text" class="form-control">
-      </div>
+    <!-- LOGIN FORM -->
+    @if (mode === 'login') {
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="fade-in">
 
-      <div class="mb-3">
-        <label for="password" class="form-label">Jelszó</label>
-        <input id="password" formControlName="password" type="password" class="form-control">
-      </div>
-
-      @if (error) {
-        <div class="alert alert-danger py-2 text-center">
-          {{ error }}
+        <div class="mb-3">
+          <label class="form-label">Felhasználónév</label>
+          <input type="text" formControlName="username" class="form-control">
         </div>
-      }
 
-      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
-        Bejelentkezés
-      </button>
+        <div class="mb-3">
+          <label class="form-label">Jelszó</label>
+          <input type="password" formControlName="password" class="form-control">
+        </div>
 
-    </form>
+        @if (error) {
+          <div class="alert alert-danger text-center py-2">{{ error }}</div>
+        }
+
+        <button class="btn btn-primary w-100" [disabled]="loginForm.invalid">Bejelentkezés</button>
+      </form>
+    }
+
+    <!-- REGISTER FORM -->
+    @if (mode === 'register') {
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="fade-in">
+
+        <div class="mb-3">
+          <label class="form-label">Felhasználónév</label>
+          <input type="text" formControlName="username" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" formControlName="email" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Jelszó</label>
+          <input type="password" formControlName="password" class="form-control">
+        </div>
+
+        @if (success) {
+          <div class="alert alert-success text-center py-2">
+            {{ success }}
+          </div>
+        }
+
+        @if (error) {
+          <div class="alert alert-danger text-center py-2">{{ error }}</div>
+        }
+
+        <button class="btn btn-success w-100" [disabled]="registerForm.invalid">Regisztráció</button>
+
+      </form>
+    }
   </div>
 </div>

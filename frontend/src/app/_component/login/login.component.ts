@@ -13,8 +13,13 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent {
 
+  mode: 'login' | 'register' = 'login';
+
   loginForm: FormGroup;
+  registerForm: FormGroup;
+
   error: string | null = null;
+  success: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -25,25 +30,49 @@ export class LoginComponent {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-  }
 
-  onSubmit(): void {
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    const credentials = this.loginForm.value;
-
-    this.http.post<{ token: string }>('/api/auth/login', credentials).subscribe({
-      next: (res) => {
-        localStorage.setItem('jwt', res.token); // JWT tárolása
-        this.error = null;
-        this.router.navigate(['/']); // sikeres login után redirect
-      },
-      error: (err) => {
-        this.error = 'Hibás felhasználónév vagy jelszó';
-        console.error(err);
-      }
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
+
   }
+
+
+  onLogin(): void {
+    if (this.loginForm.invalid) return;
+
+    this.http.post<{ token: string }>('/api/auth/login', this.loginForm.value)
+      .subscribe({
+        next: (res) => {
+          localStorage.setItem('jwt', res.token);
+          this.error = null;
+          this.router.navigate(['/']);
+        },
+        error: () => {
+          this.error = 'Hibás felhasználónév vagy jelszó';
+        }
+      });
+  }
+
+  onRegister(): void {
+    if (this.registerForm.invalid) return;
+
+    this.http.post('/api/auth/register', this.registerForm.value)
+      .subscribe({
+        next: () => {
+          this.error = null;
+          alert('Sikeres regisztráció! Most már bejelentkezhetsz.');
+
+          this.mode = 'login';
+          this.registerForm.reset();
+        },
+        error: () => {
+          this.error = 'A felhasználó már létezik, vagy hibás adatok.';
+        }
+      });
+  }
+
+
 }
