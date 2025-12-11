@@ -14,7 +14,7 @@
     @for (champ of filteredChampions(); track champ.id) {
       <div class="p-1" style="flex: 0 0 auto; width: 100px;">
         <div class="card text-center" [appTooltip]="champ.name" draggable="true" (dragstart)="onDragStartChampion($event, champ)">
-          <img [src]="'http://localhost:8081/' + champ.imageUrl"
+          <img [src]="'http://192.168.0.84:8081/' + champ.imageUrl"
                class="card-img-top img-fluid"
                alt="{{champ.name}}"
                style="height: 50px; object-fit: contain;">

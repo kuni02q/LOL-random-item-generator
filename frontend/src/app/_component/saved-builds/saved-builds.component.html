@@ -28,7 +28,7 @@
         </div>
 
         <div class="m-0 text-center" style="width: 70px;" [appTooltip]="fav.build.champion.name">
-          <img [src]="'http://localhost:8081/' + fav.build.champion.imageUrl"
+          <img [src]="'http://192.168.0.84:8081/' + fav.build.champion.imageUrl"
                alt="{{fav.build.champion.name}}"
                class="img-fluid">
           <small class="d-block text-truncate">{{ fav.build.champion.name }}</small>
@@ -36,7 +36,7 @@
 
         @for (item of fav.build.items; track item.id) {
           <div class="m-1 text-center" style="width: 60px;" [appTooltip]="item.name">
-            <img [src]="'http://localhost:8081/' + item.imageUrl" alt="{{item.name}}" class="img-fluid">
+            <img [src]="'http://192.168.0.84:8081/' + item.imageUrl" alt="{{item.name}}" class="img-fluid">
             <small class="d-block text-truncate">{{ item.name }}</small>
           </div>
         }

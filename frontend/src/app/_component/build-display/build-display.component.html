@@ -13,7 +13,7 @@
        (dragover)="allowDrop($event)"
        (drop)="onDropChampion($event)">
     <div class="card text-center" style="width: 100px;" [appTooltip]="build?.champion?.name ?? ''">
-      <img [src]="'http://localhost:8081/' + build?.champion?.imageUrl"
+      <img [src]="'http://192.168.0.84:8081/' + build?.champion?.imageUrl"
            class="card-img-top img-fluid"
            alt="{{build?.champion?.name ?? ''}}"
            style="height: 60px; object-fit: contain;">
@@ -35,7 +35,7 @@
            (dragover)="allowDrop($event)"
            (drop)="onDropItem($event, item)">
         <div class="card text-center" [appTooltip]="item?.name ?? ''">
-          <img [src]="'http://localhost:8081/' + item.imageUrl"
+          <img [src]="'http://192.168.0.84:8081/' + item.imageUrl"
                class="card-img-top img-fluid"
                alt="{{item?.name ?? ''}}"
                style="height: 50px; object-fit: contain;">
