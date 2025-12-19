@@ -14,6 +14,7 @@
     @for (item of filteredItems(); track item.id) {
       <div class="p-1" style="flex: 0 0 auto; width: 100px;">
         <div class="card text-center" [appTooltip]="item.name"  draggable="true" (dragstart)="onDragStartItem($event, item)">
+          <!-- http://localhost:8081/  |  ha nem az alábbi a gép IP címe -->
           <img [src]="'http://192.168.0.84:8081/' + item.imageUrl"
                class="card-img-top img-fluid"
                alt="{{item.name}}"

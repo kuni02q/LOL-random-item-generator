@@ -15,6 +15,9 @@ export class AuthService {
   private jwtKey = 'jwt';
   private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
 
+  private usernameSubject = new BehaviorSubject<string | null>(null);
+  username$ = this.usernameSubject.asObservable();
+
   loggedIn$ = this.loggedInSubject.asObservable();
 
   constructor(private http: HttpClient) {
@@ -27,6 +30,21 @@ export class AuthService {
     return !!token && !this.isTokenExpired(token);
   }
 
+  register(username: string, email: string, password: string) {
+    return this.http.post<{ token: string }>('/api/auth/register', {
+      username,
+      email,
+      password
+    }).pipe(
+      tap(res => {
+        localStorage.setItem(this.jwtKey, res.token);
+        this.loggedInSubject.next(true);
+        this.loadCurrentUser();
+        this.startTokenTimer();
+      })
+    );
+  }
+
   // Bejelentkezés
   login(username: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>('/api/auth/login', { username, password })
@@ -34,6 +52,7 @@ export class AuthService {
         tap(res => {
           localStorage.setItem(this.jwtKey, res.token);
           this.loggedInSubject.next(true);
+          this.loadCurrentUser();
           this.startTokenTimer();
         })
       );
@@ -43,6 +62,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.jwtKey);
     this.loggedInSubject.next(false);
+    this.usernameSubject.next(null);
   }
 
   // JWT token lekérése
@@ -83,6 +103,15 @@ export class AuthService {
       setTimeout(() => this.logout(), timeout);
     }
   }
+
+  loadCurrentUser() {
+    this.http.get<{ username: string }>('/api/auth/me')
+      .subscribe({
+        next: res => this.usernameSubject.next(res.username),
+        error: () => this.logout()
+      });
+  }
+
 
 
 

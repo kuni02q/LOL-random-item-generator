@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import { ChampionListComponent } from '../champion-list/champion-list.component';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { BuildDisplayComponent } from '../build-display/build-display.component';
@@ -16,8 +16,4 @@ import { SavedBuildsComponent } from '../saved-builds/saved-builds.component';
   ],
   styleUrls: ['./main-app.component.scss']
 })
-export class MainAppComponent implements OnInit {
-  ngOnInit() {
-    console.log('MainAppComponent ngOnInit');
-  }
-}
+export class MainAppComponent {}

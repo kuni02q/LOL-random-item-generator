@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {AuthService} from '../../_auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private authService: AuthService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -43,36 +44,38 @@ export class LoginComponent {
   onLogin(): void {
     if (this.loginForm.invalid) return;
 
-    this.http.post<{ token: string }>('/api/auth/login', this.loginForm.value)
-      .subscribe({
-        next: (res) => {
-          localStorage.setItem('jwt', res.token);
-          this.error = null;
-          this.router.navigate(['/']);
-        },
-        error: () => {
-          this.error = 'Hibás felhasználónév vagy jelszó';
-        }
-      });
+    this.authService.login(
+      this.loginForm.value.username,
+      this.loginForm.value.password
+    ).subscribe({
+      next: () => {
+        this.error = null;
+        this.router.navigateByUrl('/');
+      },
+      error: () => {
+        this.error = 'Hibás felhasználónév vagy jelszó';
+      }
+    });
   }
 
   onRegister(): void {
     if (this.registerForm.invalid) return;
 
-    this.http.post('/api/auth/register', this.registerForm.value)
-      .subscribe({
-        next: () => {
-          this.error = null;
-          alert('Sikeres regisztráció! Most már bejelentkezhetsz.');
-
-          this.mode = 'login';
-          this.registerForm.reset();
-        },
-        error: () => {
-          this.error = 'A felhasználó már létezik, vagy hibás adatok.';
-        }
-      });
+    this.authService.register(
+      this.registerForm.value.username,
+      this.registerForm.value.email,
+      this.registerForm.value.password
+    ).subscribe({
+      next: () => {
+        this.error = null;
+        this.router.navigateByUrl('/');
+      },
+      error: () => {
+        this.error = 'A felhasználó már létezik, vagy hibás adatok.';
+      }
+    });
   }
+
 
 
 }

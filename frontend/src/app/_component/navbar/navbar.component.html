@@ -2,9 +2,33 @@
   <div class="container">
     <a class="navbar-brand fs-2 fw-bold" routerLink="">LOL Item Generator</a>
 
-    <button class="btn btn-link text-decoration-none text-white" (click)="toggleTheme()" style="font-size: 2rem">
-      <i [ngClass]="isDark ? 'bi-emoji-sunglasses-fill' : 'bi-emoji-sunglasses'"></i>
-    </button>
 
+    <div class="d-flex align-items-center gap-3">
+
+      <button class="btn btn-link text-decoration-none text-white" (click)="toggleTheme()" style="font-size: 2rem">
+        <i [ngClass]="isDark ? 'bi-emoji-sunglasses-fill' : 'bi-emoji-sunglasses'"></i>
+      </button>
+
+      <!-- user menu -->
+      @if (loggedIn) {
+        <div class="dropdown">
+          <a class="text-white dropdown-toggle text-decoration-none"
+             role="button"
+             data-bs-toggle="dropdown">
+            {{ username }}
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button class="dropdown-item text-danger" (click)="logout()">
+                Log Out
+              </button>
+            </li>
+          </ul>
+        </div>
+      }
+
+
+    </div>
   </div>
 </nav>

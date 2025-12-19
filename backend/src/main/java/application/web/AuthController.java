@@ -4,6 +4,7 @@ import application.model.User;
 import application.repository.UserRepository;
 import application.security.JwtUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +56,23 @@ public class AuthController {
 
         return Map.of("token", token);
     }
+
+
+    @GetMapping("/me")
+    public Map<String, String> me() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new RuntimeException("Not authenticated");
+        }
+
+        User user = (User) auth.getPrincipal();
+        return Map.of(
+                "username", user.getUsername(),
+                "email", user.getEmail()
+        );
+    }
+
+
 
     public static record AuthRequest(String username, String password) {}
 

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
+import {AuthService} from '../../_auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,11 +12,28 @@ import {CommonModule} from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
   isDark=false;
+  loggedIn = false;
+  username: string | null = null;
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
+
+    this.authService.loggedIn$.subscribe(v => this.loggedIn = v);
+    this.authService.username$.subscribe(u => this.username = u);
+
+    if (this.authService.isLoggedIn()) {
+      this.authService.loadCurrentUser();
+    }
+
     const saved = localStorage.getItem('theme');
     this.isDark = saved === 'dark';
     this.applyTheme();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
   }
 
   toggleTheme() {
